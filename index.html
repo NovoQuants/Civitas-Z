@@ -1,0 +1,697 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- WEBSITE INFORMATION -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CivitasX | Quantitative Research</title>
+
+    <meta name="description"
+        content="CivitasX is an independent quantitative research platform exploring financial markets through mathematics, statistics, programming, and computational modeling.">
+
+    <meta name="theme-color" content="#08111f">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- CHART.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <header>
+        <nav class="navbar">
+
+            <a href="#home" class="logo">CivitasX</a>
+
+            <button
+                class="menu-toggle"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false">
+                ☰
+            </button>
+
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#research">Research</a>
+                <a href="#markets">Markets</a>
+                <a href="#models">Models</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#simulations">Simulations</a>
+                <a href="#about">About</a>
+            </div>
+
+        </nav>
+    </header>
+
+
+    <main>
+
+        <!-- =====================================
+             HOME
+        ====================================== -->
+
+        <section id="home" class="hero section">
+
+            <div>
+
+                <p class="eyebrow">
+                    INDEPENDENT QUANTITATIVE RESEARCH
+                </p>
+
+                <h1>
+                    Quantifying Markets.
+                    <span>Modeling Possibilities.</span>
+                </h1>
+
+                <p>
+                    An independent quantitative research initiative
+                    exploring financial markets through mathematics,
+                    statistics, programming, and computational modeling.
+                </p>
+
+                <div class="hero-actions">
+
+                    <a href="#research" class="button">
+                        Explore Research
+                    </a>
+
+                    <a href="#models" class="button secondary">
+                        Explore Models
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             RESEARCH
+        ====================================== -->
+
+        <section id="research" class="section">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">01 / RESEARCH</p>
+
+                <h2>Research & Analysis</h2>
+
+                <p>
+                    Investigating financial data, market behavior,
+                    statistical relationships, and quantitative strategies.
+                </p>
+
+            </div>
+
+            <div class="cards">
+
+                <article class="card">
+
+                    <div class="card-icon">01</div>
+
+                    <h3>Financial Data Analysis</h3>
+
+                    <p>
+                        Examine historical financial datasets,
+                        identify patterns, and investigate
+                        relationships between assets.
+                    </p>
+
+                </article>
+
+
+                <article class="card">
+
+                    <div class="card-icon">02</div>
+
+                    <h3>Statistical Research</h3>
+
+                    <p>
+                        Apply statistical techniques to explore
+                        distributions, correlations, volatility,
+                        and uncertainty.
+                    </p>
+
+                </article>
+
+
+                <article class="card">
+
+                    <div class="card-icon">03</div>
+
+                    <h3>Quantitative Strategies</h3>
+
+                    <p>
+                        Develop and evaluate mathematical models
+                        designed to study financial market behavior.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             MARKET OVERVIEW
+        ====================================== -->
+
+        <section id="markets" class="section">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">02 / MARKET DATA</p>
+
+                <h2>Market Overview</h2>
+
+                <p>
+                    Explore an illustrative financial index
+                    and its historical movements.
+                </p>
+
+            </div>
+
+
+            <div class="metric-grid">
+
+                <div class="metric-card">
+
+                    <span class="metric-label">
+                        Sample Index
+                    </span>
+
+                    <strong class="metric-value"
+                        data-market-value="sample-index">
+                        104.1
+                    </strong>
+
+                    <span class="metric-note">
+                        Illustrative value
+                    </span>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <span class="metric-label">
+                        Sample Change
+                    </span>
+
+                    <strong class="metric-value positive"
+                        data-market-change="sample-index">
+                        +4.1%
+                    </strong>
+
+                    <span class="metric-note">
+                        Illustrative change
+                    </span>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <span class="metric-label">
+                        Data Status
+                    </span>
+
+                    <strong class="metric-value"
+                        id="marketStatus">
+                        Demo data
+                    </strong>
+
+                    <span class="metric-note">
+                        Not live market data
+                    </span>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <span class="metric-label">
+                        Last Updated
+                    </span>
+
+                    <strong class="metric-value"
+                        data-market-date>
+                        --
+                    </strong>
+
+                    <span class="metric-note">
+                        Local demonstration date
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>Illustrative Market Performance</h3>
+
+                    <button
+                        class="button secondary"
+                        id="refreshMarket"
+                        type="button">
+                        Refresh Demo
+                    </button>
+
+                </div>
+
+                <div class="chart-wrap">
+
+                    <canvas id="marketChart"
+                        aria-label="Illustrative market index chart">
+                    </canvas>
+
+                </div>
+
+                <p class="small-note">
+                    Demonstration dataset only.
+                    Values do not represent actual market prices.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             QUANTITATIVE MODELS
+        ====================================== -->
+
+        <section id="models" class="section">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">03 / QUANTITATIVE MODELS</p>
+
+                <h2>Mathematical Models</h2>
+
+                <p>
+                    Developing computational tools to investigate
+                    financial systems and mathematical relationships.
+                </p>
+
+            </div>
+
+
+            <div class="model-container">
+
+                <article class="model-card">
+
+                    <div class="card-icon">01</div>
+
+                    <h3>Portfolio Optimization</h3>
+
+                    <p>
+                        Analyze asset allocation, volatility,
+                        covariance, and portfolio risk.
+                    </p>
+
+                    <span class="tag">
+                        Portfolio Theory
+                    </span>
+
+                </article>
+
+
+                <article class="model-card">
+
+                    <div class="card-icon">02</div>
+
+                    <h3>Algorithmic Backtesting</h3>
+
+                    <p>
+                        Evaluate historical trading strategies
+                        using financial datasets.
+                    </p>
+
+                    <span class="tag">
+                        Algorithmic Research
+                    </span>
+
+                </article>
+
+
+                <article class="model-card">
+
+                    <div class="card-icon">03</div>
+
+                    <h3>Statistical Modeling</h3>
+
+                    <p>
+                        Explore mathematical relationships,
+                        probability distributions, and market behavior.
+                    </p>
+
+                    <span class="tag">
+                        Statistical Analysis
+                    </span>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             PORTFOLIO CALCULATOR
+        ====================================== -->
+
+        <section id="portfolio" class="section">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">04 / PORTFOLIO ANALYSIS</p>
+
+                <h2>Portfolio Growth Calculator</h2>
+
+                <p>
+                    Experiment with hypothetical investment
+                    assumptions and compound growth.
+                </p>
+
+            </div>
+
+
+            <div class="panel">
+
+                <form id="portfolioForm">
+
+                    <div class="form-grid">
+
+                        <div class="form-field">
+
+                            <label for="investmentAmount">
+                                Initial Investment ($)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="investmentAmount"
+                                value="10000"
+                                min="0"
+                                step="100">
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label for="expectedReturn">
+                                Annual Return (%)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="expectedReturn"
+                                value="7"
+                                step="0.1">
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label for="investmentYears">
+                                Investment Duration (Years)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="investmentYears"
+                                value="5"
+                                min="0"
+                                max="100"
+                                step="1">
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label for="annualContribution">
+                                Annual Contribution ($)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="annualContribution"
+                                value="0"
+                                min="0"
+                                step="100">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="button-row">
+
+                        <button
+                            type="submit"
+                            class="button">
+                            Calculate Portfolio
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <div
+                    id="portfolioResult"
+                    class="result-box"
+                    aria-live="polite">
+
+                    Enter your assumptions
+                    and calculate your portfolio.
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             MONTE CARLO SIMULATION
+        ====================================== -->
+
+        <section id="simulations" class="section">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">05 / COMPUTATIONAL SIMULATION</p>
+
+                <h2>Monte Carlo Simulation</h2>
+
+                <p>
+                    Explore how random variation and mathematical
+                    assumptions can produce different possible outcomes.
+                </p>
+
+            </div>
+
+
+            <div class="panel">
+
+                <form id="simulationForm">
+
+                    <div class="form-grid">
+
+                        <div class="form-field">
+
+                            <label for="simulationInitial">
+                                Starting Value ($)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="simulationInitial"
+                                value="10000"
+                                min="1">
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label for="simulationReturn">
+                                Expected Annual Return (%)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="simulationReturn"
+                                value="7"
+                                step="0.1">
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label for="simulationVolatility">
+                                Annual Volatility (%)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="simulationVolatility"
+                                value="15"
+                                min="0"
+                                step="0.1">
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label for="simulationYears">
+                                Number of Years
+                            </label>
+
+                            <input
+                                type="number"
+                                id="simulationYears"
+                                value="10"
+                                min="1"
+                                max="80">
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label for="simulationTrials">
+                                Simulation Trials
+                            </label>
+
+                            <input
+                                type="number"
+                                id="simulationTrials"
+                                value="1000"
+                                min="10"
+                                max="20000">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="button-row">
+
+                        <button
+                            type="submit"
+                            class="button">
+                            Run Simulation
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <div
+                    id="simulationResult"
+                    class="result-box"
+                    aria-live="polite">
+
+                    Configure your assumptions
+                    and run your first simulation.
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             ABOUT
+        ====================================== -->
+
+        <section id="about" class="section">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">06 / ABOUT US</p>
+
+                <h2>About CivitasX</h2>
+
+            </div>
+
+            <div class="panel">
+
+                <p>
+                    CivitasX is an independent student-led initiative
+                    focused on quantitative finance, software
+                    engineering, mathematical modeling, and
+                    data-driven research.
+                </p>
+
+                <p>
+                    Our objective is to investigate complex financial
+                    systems through computational methods,
+                    mathematical reasoning, and independent research.
+                </p>
+
+                <p class="small-note">
+                    Research projects should document their
+                    methodology, assumptions, data sources,
+                    limitations, and individual contributions.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer>
+
+        <p>
+            © <span id="currentYear">2026</span>
+            CivitasX | Independent Quantitative Research
+        </p>
+
+        <p class="small-note">
+            Educational research and computational modeling.
+            Not investment advice so dont trust this as a financial advice platform.
+        </p>
+
+    </footer>
+
+
+    <!-- =====================================
+         JAVASCRIPT MODULE
+    ====================================== -->
+
+    <script type="module" src="js/main.js"></script>
+
+</body>
+</html>
+
