@@ -1,12 +1,11 @@
-
 /* =====================================================
-   CIVITAS-X | SIMULATIONS.JS
-   Monte Carlo simulation
+   CIVITAS-X | PORTFOLIO.JS
+   Portfolio growth calculator
    ===================================================== */
 
 // GET NUMBERS FROM HTML
 
-function getNumber(selector, fallback) {
+const numberFrom = (selector, fallback) => {
 
     const element = document.querySelector(selector);
 
@@ -18,222 +17,128 @@ function getNumber(selector, fallback) {
         ? value
         : fallback;
 
-}
+};
 
-// CALCULATE PERCENTILES
+// FORMAT MONEY
 
-function percentile(sortedValues, fraction) {
+function formatCurrency(value) {
 
-    const index = Math.min(
-        sortedValues.length - 1,
-
-        Math.max(
-            0,
-            Math.floor(
-                fraction *
-                (sortedValues.length - 1)
-            )
-        )
-    );
-
-    return sortedValues[index];
+    return new Intl.NumberFormat(
+        "en-US",
+        {
+            style: "currency",
+            currency: "USD",
+            maximumFractionDigits: 2
+        }
+    ).format(value);
 
 }
 
-// GENERATE RANDOM NORMAL NUMBER
+// CALCULATE PORTFOLIO
 
-function randomNormal() {
+function calculatePortfolio() {
 
-    let u = 0;
-    let v = 0;
-
-    while (u === 0) {
-        u = Math.random();
-    }
-
-    while (v === 0) {
-        v = Math.random();
-    }
-
-    return Math.sqrt(
-        -2 * Math.log(u)
-    ) * Math.cos(
-        2 * Math.PI * v
-    );
-
-}
-
-// RUN MONTE CARLO SIMULATION
-
-function runMonteCarlo() {
-
-    const initial = getNumber(
-        "#simulationInitial, [name='simulationInitial']",
+    const principal = numberFrom(
+        "#investmentAmount, [name='investmentAmount']",
         10000
     );
 
-    const annualReturn = getNumber(
-        "#simulationReturn, [name='simulationReturn']",
+    const annualReturnPercent = numberFrom(
+        "#expectedReturn, [name='expectedReturn']",
         7
-    ) / 100;
-
-    const volatility = getNumber(
-        "#simulationVolatility, [name='simulationVolatility']",
-        15
-    ) / 100;
-
-    const years = Math.floor(
-        getNumber(
-            "#simulationYears, [name='simulationYears']",
-            10
-        )
     );
 
-    const trials = Math.floor(
-        getNumber(
-            "#simulationTrials, [name='simulationTrials']",
-            1000
-        )
+    const years = numberFrom(
+        "#investmentYears, [name='investmentYears']",
+        5
     );
 
-    const output = document.querySelector(
-        "#simulationResult, [data-simulation-result]"
+    const annualContribution = numberFrom(
+        "#annualContribution, [name='annualContribution']",
+        0
     );
 
-    if (!output) return;
+    const result = document.querySelector(
+        "#portfolioResult, [data-portfolio-result]"
+    );
+
+    if (!result) return;
 
     // VALIDATE INPUTS
 
     if (
-        initial <= 0 ||
-        volatility < 0 ||
-        years < 1 ||
-        years > 80 ||
-        trials < 10 ||
-        trials > 20000
+        principal < 0 ||
+        years < 0 ||
+        annualReturnPercent <= -100 ||
+        annualContribution < 0
     ) {
 
-        output.textContent =
-            "Use a positive starting amount, non-negative volatility, 1–80 years, and 10–20,000 trials.";
+        result.textContent =
+            "Please enter non-negative amounts and a return greater than -100%.";
 
         return;
 
     }
 
-    // STORE SIMULATION RESULTS
+    // CONVERT PERCENTAGE TO DECIMAL
 
-    const outcomes = [];
+    const rate = annualReturnPercent / 100;
 
-    // CALCULATE ANNUAL DRIFT
+    // CALCULATE COMPOUND GROWTH
 
-    const yearlyDrift =
-        annualReturn -
-        0.5 * volatility * volatility;
-
-    // RUN SIMULATION TRIALS
+    let balance = principal;
 
     for (
-        let trial = 0;
-        trial < trials;
-        trial++
+        let year = 0;
+        year < years;
+        year++
     ) {
 
-        let value = initial;
-
-        for (
-            let year = 0;
-            year < years;
-            year++
-        ) {
-
-            const shock = randomNormal();
-
-            value *= Math.exp(
-                yearlyDrift +
-                volatility * shock
-            );
-
-        }
-
-        outcomes.push(value);
+        balance =
+            balance * (1 + rate) +
+            annualContribution;
 
     }
 
-    // SORT RESULTS
+    // CALCULATE TOTAL CONTRIBUTIONS
 
-    outcomes.sort(
-        (a, b) => a - b
-    );
+    const totalContributions =
+        principal +
+        annualContribution * years;
 
-    // CALCULATE PERCENTILES
+    // CALCULATE ESTIMATED GROWTH
 
-    const median = percentile(
-        outcomes,
-        0.50
-    );
-
-    const lower = percentile(
-        outcomes,
-        0.10
-    );
-
-    const upper = percentile(
-        outcomes,
-        0.90
-    );
-
-    // FORMAT CURRENCY
-
-    const formatMoney = value => {
-
-        return value.toLocaleString(
-            "en-US",
-            {
-                style: "currency",
-                currency: "USD",
-                maximumFractionDigits: 0
-            }
-        );
-
-    };
+    const estimatedGrowth =
+        balance - totalContributions;
 
     // DISPLAY RESULTS
 
-    output.innerHTML = `
+    result.innerHTML = `
 
         <strong>
-            Simulation complete:
-            ${trials.toLocaleString()}
-            illustrative paths
+            Illustrative ending value:
+            ${formatCurrency(balance)}
         </strong>
 
         <div class="small-note">
 
-            10th percentile:
-            ${formatMoney(lower)}
+            Total contributions:
+            ${formatCurrency(totalContributions)}
 
         </div>
 
         <div class="small-note">
 
-            Median outcome:
-            ${formatMoney(median)}
+            Illustrative growth:
+            ${formatCurrency(estimatedGrowth)}
 
         </div>
 
         <div class="small-note">
 
-            90th percentile:
-            ${formatMoney(upper)}
-
-        </div>
-
-        <div class="small-note">
-
-            These are model-generated scenarios,
-            not guaranteed outcomes or predictions.
-            The model assumes constant annual
-            return and volatility parameters.
+            Assumes the same annual return each year,
+            with contributions at year-end.
+            Excludes fees, taxes, and volatility.
 
         </div>
 
@@ -241,16 +146,16 @@ function runMonteCarlo() {
 
 }
 
-// INITIALIZE SIMULATIONS
+// INITIALIZE PORTFOLIO
 
-function initSimulations() {
+function initPortfolio() {
 
     const form = document.querySelector(
-        "#simulationForm, [data-simulation-form]"
+        "#portfolioForm, [data-portfolio-form]"
     );
 
     const button = document.querySelector(
-        "#runSimulation, [data-run-simulation]"
+        "#calculatePortfolio, [data-calculate-portfolio]"
     );
 
     // FORM SUBMISSION
@@ -263,7 +168,7 @@ function initSimulations() {
 
                 event.preventDefault();
 
-                runMonteCarlo();
+                calculatePortfolio();
 
             }
         );
@@ -274,8 +179,20 @@ function initSimulations() {
 
         button.addEventListener(
             "click",
-            runMonteCarlo
+            calculatePortfolio
         );
+
+    }
+
+    // INITIAL CALCULATION
+
+    if (
+        document.querySelector(
+            "#portfolioResult, [data-portfolio-result]"
+        )
+    ) {
+
+        calculatePortfolio();
 
     }
 
@@ -284,7 +201,6 @@ function initSimulations() {
 // EXPORT FUNCTIONS
 
 export {
-    initSimulations,
-    runMonteCarlo
+    initPortfolio,
+    calculatePortfolio
 };
-
